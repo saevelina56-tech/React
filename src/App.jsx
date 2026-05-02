@@ -6,12 +6,14 @@ import './App.css'
 import Card from './Card'
 import Header from './Header'
 import ClickExample from './Clicker'
+import ColorPick from './Color'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+      <ColorPick />
       <Header />
       <ClickExample />
       <Card name={"Кроссовки белые"} image={Boots1} price={20000} count={5000}/>
