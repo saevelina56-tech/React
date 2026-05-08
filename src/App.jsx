@@ -7,11 +7,6 @@ function App() {
   const desc = 'I am a professional translator specializing in accurate and culturally sensitive translation across multiple language pairs.'
   const emoji = '🤑'
 
-  // const style {
-  //   color: 'white',
-
-  // }
-
   return (
     <>
       <div className='card'>
