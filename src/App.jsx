@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import Boots1 from './assets/boots1.png'
-import Boots2 from './assets/boots2.webp'
 import './App.css'
-import Card from './Card'
-import Header from './Header'
-import ClickExample from './Clicker'
-import ColorPick from './Color'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const name = 'John'
+  const prof = 'Translator'
+  const desc = 'I am a professional translator specializing in accurate and culturally sensitive translation across multiple language pairs.'
+  const emoji = '🤑'
+
+  // const style {
+  //   color: 'white',
+
+  // }
 
   return (
     <>
-      <ColorPick />
-      <Header />
-      <ClickExample />
-      <Card name={"Кроссовки белые"} image={Boots1} price={20000} count={5000}/>
-      <Card name={"Наименование крассные"} image={Boots2} price={30000}/>
-
+      <div className='card'>
+        <h1 style={{color: '#2c3e50'}}>{name}</h1>
+        <h2 style={{color: '#3498db'}}>{prof}</h2>
+        <p>{desc}{emoji}</p>
+      </div>
     </>
   )
 }

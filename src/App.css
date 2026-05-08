@@ -1,0 +1,24 @@
+.card {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border: solid 2px hsl(204, 51%, 73%);
+  border-radius: 15px;
+  background-color: hsl(194, 56%, 87%);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+p {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
