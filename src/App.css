@@ -22,3 +22,13 @@ p {
   line-height: 1.5;
   margin-bottom: 20px;
 }
+
+.highlight {
+    background-color: lightblue;
+    padding: 10px;
+}
+
+.highlight:hover {
+  background-color: #87ceeb;
+  transform: scale(1.02);
+}
