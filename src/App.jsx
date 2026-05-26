@@ -1,34 +1,31 @@
 import React, { useState } from 'react'
-import UserCard from './UserCard'
-import ButtonWithCallback from './ButtonWithCallback'
+import UserStatus from './UserStatus'
+import FruitList from './FruitList';
+
 
 function App() {
-  const [name] = useState('John')
-  const [age, setAge] = useState(25)
-  const [color, setColor] = useState('blue');
-  function changeAge() {
-    setAge(age+1);
-  }
 
-  function changeColor() {
-    const colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    setColor(randomColor);
-  }
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  function handleClick(message) {
-    console.log(message);
-  }
+  const toggleLoginStatus = () => {
+    setIsLoggedIn(prevStatus => !prevStatus);
+  };
 
+  const fruits = ['Яблоко', 'Банан', 'Апельсин', 'Киви', 'Виноград']
   return (
     <>
-      <h1>Первое задание</h1>
-      <button onClick={changeAge}>Увеличить возраст на 1 год</button>
-      <button onClick={changeColor}>Изменить цвет</button>
-      <UserCard name={name} age={age} color={color} />
-      <h1>Второе задание</h1>
-      <ButtonWithCallback onButtonClick={handleClick} />
-
+       <UserStatus isLoggedIn={isLoggedIn} />
+       <div>
+          <button
+            onClick={toggleLoginStatus}
+          >
+            {isLoggedIn ? 'Выйти' : 'Войти'}
+          </button>
+       </div>
+       <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+        <h2>Домашнее задание: Рендеринг списков</h2>
+        <FruitList fruits={fruits} />
+       </div>
     </>
   )
 }
