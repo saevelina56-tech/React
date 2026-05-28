@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 
-function UserCard({name, age, color}) {
-    console.log("Ререндер UserCard")
+function UserCard({name, age, email}) {
     return (
-        <div className='card' style={{backgroundColor: `${color}`}}>
-            <h2>Карточка пользователя</h2>
+        <div className='card'>
             <h2 className='name'>{name}</h2>
             <p className='age'> Возраст: {age} лет</p>
+            <p className='email'>Email: {email}</p>
         </div>
     );
 }
