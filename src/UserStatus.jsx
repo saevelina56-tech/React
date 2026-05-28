@@ -16,11 +16,7 @@ function UserStatus ({isLoggedIn}) {
         );
     } else {
         return (
-            <div>
-                <button>
-                    Войти
-                </button>
-            </div>
+            <div></div>
         );
     }
 }
