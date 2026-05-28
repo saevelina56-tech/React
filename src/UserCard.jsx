@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 
-function UserCard({name, age, email}) {
+function UserCard({id, name, age, email}) {
     return (
         <div className='card'>
             <h2 className='name'>{name}</h2>

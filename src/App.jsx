@@ -10,8 +10,8 @@ function Home() {
   function AboutUs() {
     return (
       <div>
-        <h1>О нас: </h1>
-        <p>аывораылоравоалыовалво аооаао аоылдффд</p>
+        <h1>Информация о нас: </h1>
+        <p>аывораылоравоалыовалво аооаао аоылдффд бебебебеб</p>
       </div>
     )
   }
@@ -27,14 +27,11 @@ function Home() {
   function Navigation() {
     return (
       <nav>
-        <Link to = '/'
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#34495e'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-          >
-          Главная
+        <Link to = '/'>
+          Главная |
         </Link>
         <Link to = '/about'>
-          О нас
+          О нас  |
         </Link>
         <Link to ='/contacts'>
           Контакты
@@ -44,9 +41,9 @@ function Home() {
   }
 function App() {
   const users = [
-        { name: 'Анна Иванова', age: 25, email: 'anna@example.com' },
-        { name: 'Пётр Сидоров', age: 32, email: 'petr@example.com' },
-        { name: 'Мария Петрова', age: 28, email: 'maria@example.com' },
+        { id: 1,  name: 'Анна Иванова', age: 25, email: 'anna@example.com' },
+        { id: 2, name: 'Пётр Сидоров', age: 32, email: 'petr@example.com' },
+        { id: 3, name: 'Мария Петрова', age: 28, email: 'maria@example.com' },
     ];
   
 
@@ -57,9 +54,10 @@ function App() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '20px' }}>
           {users.map(user => (
               <UserCard 
-                  name={user.name}
-                  age={user.age}
-                  email={user.email}
+                key={user.id}
+                name={user.name}
+                age={user.age}
+                email={user.email}
               />
           ))}
         </div>
