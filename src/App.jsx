@@ -1,51 +1,39 @@
 import React, { useState } from 'react';
-import ErrorBoundary from './ErrorBoundary';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import Contacts from './components/Contacts';
-import QuoteViewer from './QuoteViewer';
+import RandomUser from './RandomUser';
+import useCounter from './useCounter';
 
 function App() {
-    const [show, setShow] = useState(true);
-    const [activeTab, setActiveTab] = useState('home');
-    
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'home':
-                return <Home />;
-            case 'profile':
-                return <Profile />;
-            case 'contacts':
-                return <Contacts />;
-            default:
-                return <Home />;
-        }
-    };
-    
+    const [showUser, setShowUser] = useState(false);
+     const [count, increment, decrement, reset] = useCounter(0, 1);
     return (
         <>
-            <h1>Список цитат</h1>
-            <button onClick={() => setShow(!show)}>
-                {show ? 'Скрыть' : 'Показать'}
+            <h2>Задание RandomUser</h2>
+            <button 
+                onClick={() => setShowUser(!showUser)}
+            >
+                {showUser ? 'Скрыть пользователя' : 'Показать случайного пользователя'}
             </button>
-            {show && <QuoteViewer />}
-            
-            <h1>Навигация по вкладкам с ErrorBoundary</h1>
+            {showUser && <RandomUser />}
+
+            <h2>useCounter</h2>
+            <p>{count}</p>
             <div className='buttons'>
-                <button onClick={() => setActiveTab('home')}>
-                    Главная
+                <button
+                onClick={increment}
+                >
+                    Увеличить
                 </button>
-                <button onClick={() => setActiveTab('profile')}>
-                    Профиль
+                <button
+                    onClick={decrement}
+                >
+                    Уменьшить
                 </button>
-                <button onClick={() => setActiveTab('contacts')}>
-                    Контакты
+                <button
+                    onClick={reset}
+                >
+                    Сбросить
                 </button>
             </div>
-            
-            <ErrorBoundary key={activeTab}>
-                {renderContent()}
-            </ErrorBoundary>
         </>
     );
 }
