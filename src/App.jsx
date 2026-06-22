@@ -1,39 +1,83 @@
-import React, { useState } from 'react';
-import RandomUser from './RandomUser';
-import useCounter from './useCounter';
+import React, { useState, Suspense, lazy, useMemo, useReducer } from 'react';
+import { ContactReducer, initialState } from './ContactReducer';import ContactList from './ContactList';
+import SearchBar from './SearchBar';
+import ContactForm from './ContactForm';
+
+const UserList = lazy(() => import('./UserList'));
 
 function App() {
-    const [showUser, setShowUser] = useState(false);
-     const [count, increment, decrement, reset] = useCounter(0, 1);
+    const [showUsers, setShowUsers] = useState(false);
+    const toggleUsers = () => {
+        setShowUsers(!showUsers);
+    };
+
+    const [state, dispatch] = useReducer(ContactReducer, initialState);
+    const { contacts, searchTerm, error } = state;
+
+    const filteredContacts = useMemo(() => {
+        if (!searchTerm.trim()) return contacts;
+        const search = searchTerm.toLowerCase().trim();
+        return contacts.filter(c => 
+            c.name.toLowerCase().includes(search) ||
+            c.phone.toLowerCase().includes(search)
+        );
+    }, [contacts, searchTerm]);
+
+    const handleAddContact = (name, phone) => {
+        if (!name || !phone) {
+            dispatch({ type: 'SET_ERROR', payload: 'Заполните все поля' });
+            return;
+        }
+        
+        const newContact = {
+            id: Date.now(),
+            name: name,
+            phone: phone,
+        };
+        dispatch({ type: 'ADD_CONTACT', payload: newContact });
+    };
+
+    const handleDeleteContact = (id) => {
+        dispatch({ type: 'DELETE_CONTACT', payload: id });
+    };
+
+    const handleSearch = (term) => {
+        dispatch({ type: 'SET_SEARCH', payload: term });
+    };
+
     return (
         <>
-            <h2>Задание RandomUser</h2>
-            <button 
-                onClick={() => setShowUser(!showUser)}
+            <h1>Задание 1: Lazy Loading</h1>
+            <button
+                onClick={toggleUsers}
             >
-                {showUser ? 'Скрыть пользователя' : 'Показать случайного пользователя'}
+                {showUsers ? 'Скрыть' : 'Показать пользователей'}
             </button>
-            {showUser && <RandomUser />}
-
-            <h2>useCounter</h2>
-            <p>{count}</p>
-            <div className='buttons'>
-                <button
-                onClick={increment}
-                >
-                    Увеличить
-                </button>
-                <button
-                    onClick={decrement}
-                >
-                    Уменьшить
-                </button>
-                <button
-                    onClick={reset}
-                >
-                    Сбросить
-                </button>
+            <div>
+                {showUsers ? (
+                    <Suspense fallback={
+                        <div className="loading-container">
+                            <div className="loader"></div>
+                            <p className="loading-text">Загрузка списка пользователей...</p>
+                        </div>
+                    }>
+                        <UserList />
+                    </Suspense>
+                ) : null}
             </div>
+            <h1>Задание 2: Контакты</h1>
+            <ContactForm 
+                onAddContact={handleAddContact}
+                error={error}
+            />
+            <SearchBar 
+                searchTerm={searchTerm}
+                onSearch={handleSearch}
+            />
+            <ContactList 
+                contacts={filteredContacts}
+                onDeleteContact={handleDeleteContact}
+            />
         </>
     );
 }
