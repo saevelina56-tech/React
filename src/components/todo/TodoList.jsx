@@ -1,46 +1,33 @@
 import React, { useState, useCallback } from "react";
 import TodoItem from './TodoItem'; 
+import useTaskStore from "./TaskStore";
 
 function TodoList() {
-    const [tasks, setTasks] = useState([]);
+    const { 
+        tasks, 
+        addTask, 
+        toggleTask, 
+        deleteTask,
+    } = useTaskStore();
+    
     const [newTaskText, setNewTaskText] = useState('');
 
-    const addTask = () => {
+    const handleAddTask = () => {
         if (newTaskText.trim() === '') {
             alert('Введите текст задачи: ');
             return;
         }
-
-        const newTask = {
-            id: Date.now(),
-            text: newTaskText,
-            completed: false
-        };
-        
-        setTasks([...tasks, newTask]);
+        addTask(newTaskText);
         setNewTaskText('');
     };
 
-    const ChangeState = useCallback((taskId) => {
-        setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === taskId
-                    ? { ...task, completed: !task.completed }
-                    : task
-            )
-        );
-    }, []);
 
-    const deleteTask = useCallback((taskId) => {
-        setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
-    }, []);
-
-    const completedCount = tasks.filter(task => task.completed).length;
     const totalCount = tasks.length;
+    const completedCount = tasks.filter(task => task.completed).length;
 
     return (
         <div className='container'>
-            <h2>Задание 2: Список задач (memo)</h2>
+            <h2>Задание 2: Список задач (zustand)</h2>
             {totalCount > 0 && (
                 <div className="counter">Выполнено {completedCount} из {totalCount}</div>
             )}
@@ -52,7 +39,7 @@ function TodoList() {
                     placeholder="Введите новую задачу..."
                     className="task-input"
                 />
-                <button onClick={addTask} className="add-btn">Добавить</button>
+                <button onClick={handleAddTask} className="add-btn">Добавить</button>
             </div>
             <div className='tasks-list'>
                 {tasks.length === 0 ? (
@@ -64,7 +51,7 @@ function TodoList() {
                         <TodoItem
                             key={task.id}
                             todo={task}
-                            onToggle={ChangeState}
+                            onToggle={toggleTask}
                             onDelete={deleteTask}
                         />
                     ))

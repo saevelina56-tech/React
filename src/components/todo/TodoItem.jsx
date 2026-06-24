@@ -1,4 +1,4 @@
-import React, {memo, useMemo} from 'react';
+import React, { memo } from 'react';
  
 const TodoItem = memo(({ todo, onToggle, onDelete }) => {
     console.log(`Рендер TodoItem: ${todo.text}`);
